@@ -3,6 +3,23 @@ import bcrypt from 'bcrypt'
 import { Admin } from './models/Admin.js'
 import './DB.js'
 
+ async function AdminAccount(){
+
 try{
-    const adminCount = Admin
+    const adminCount =  await Admin.countDocuments()
+    if(adminCount === 0){
+        const hashPassword = await bcrypt.hash('adminpassword',10)
+        const newAdmin = new Admin({
+            username: 'admin',
+            password: hashPassword
+        })
+      await  newAdmin.save()
+      console.log(`The Account Is Created`);
+    }else{
+        console.log(`Account Is Already Existed`);
+    }
+}catch(err){
+  console.log(`error`,err);
 }
+}
+AdminAccount()

@@ -5,5 +5,5 @@ import mongoose from "mongoose";
     password: { type: String, required:true}
  })
 
- const adminModel  = mongoose.model("admin", adminSchema);
- export {adminModel as admin} 
+ const adminModel  = mongoose.model("Admin", adminSchema);
+ export {adminModel as Admin} 
