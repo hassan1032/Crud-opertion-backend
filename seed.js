@@ -19,7 +19,7 @@ try{
         console.log(`Account Is Already Existed`);
     }
 }catch(err){
-  console.log(`error`,err);
+  console.log(`error`);
 }
 }
 AdminAccount()
