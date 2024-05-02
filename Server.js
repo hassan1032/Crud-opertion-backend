@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import './DB.js'
 import { AdminRouter } from "./routes/auth.js";
 import { studentRouter } from "./routes/student.js";
+import { bookRouter } from "./routes/book.js";
 
 
 const app = express();
@@ -17,6 +18,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use('/auth', AdminRouter)
+app.use('/book', bookRouter)
 
 app.use('/student', studentRouter)
 dotenv.config();
