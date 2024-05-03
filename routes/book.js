@@ -4,6 +4,7 @@ import { Book } from "../models/Book.js";
 
 const router = express.Router();
 import { verifyAdmin } from "./auth.js";
+// router for adding new book
 router.post("/add", verifyAdmin, async (req, res) => {
   try {
     const { name, author, imageUrl } = req.body;
@@ -20,7 +21,7 @@ router.post("/add", verifyAdmin, async (req, res) => {
     res.status(500).json({ message: `Error In Adding Book` });
   }
 });
-
+// router for fetching all books
 router.get("/books", async (req, res) => {
   try {
     const books = await Book.find({});
@@ -29,6 +30,7 @@ router.get("/books", async (req, res) => {
     res.status(500).json({ message: `Error In Fetching Books` });
   }
 });
+// Router For Fetching Book By Id
 router.get("/book/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -38,7 +40,7 @@ router.get("/book/:id", async (req, res) => {
     return res.json({ message: `Error In Fetching Book` });
   }
 });
-
+// Router For Updated Book 
 router.put("/book/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -48,6 +50,21 @@ router.put("/book/:id", async (req, res) => {
    
   } catch (err) {
     return res.json({ message: `Error In Fetching Book` });
+  }
+});
+// Router For Deleted Book 
+router.delete("/book/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteBook = await Book.findByIdAndDelete({_id: id});
+    if (deleteBook) {
+      return res
+        .status(200)
+        .send({ message: "Book deleted successfully", deleteBook });
+    }
+    throw new Error("Book not found");
+  } catch {
+    return res.status(500).send({ message: "Error deleting book" });
   }
 });
 export { router as bookRouter };
